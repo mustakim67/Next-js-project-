@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import Link from "next/link";
@@ -8,24 +9,27 @@ import Swal from "sweetalert2";
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [hasShownLoginAlert, setHasShownLoginAlert] = useState(false); 
     const toggleMenu = () => setIsOpen(!isOpen);
     const router = useRouter();
     const { data: session, status } = useSession();
 
-    // Login success alert
     useEffect(() => {
-        if (status === "authenticated") {
+        if (status === "authenticated" && !hasShownLoginAlert) {
+            setHasShownLoginAlert(true); 
             Swal.fire({
                 icon: "success",
                 title: "Login Successful",
                 text: `Welcome, ${session.user.name || "User"}!`,
                 timer: 2000,
                 showConfirmButton: false,
+            }).then(() => {
+                router.push("/products"); 
             });
         }
-    }, [status, session]);
+    }, [status, session, hasShownLoginAlert, router]);
 
-    // Logout handler with alert
+    // Logout handler
     const handleLogout = async () => {
         await Swal.fire({
             icon: "success",
@@ -52,7 +56,7 @@ const NavBar = () => {
                         </Link>
                     </div>
 
-                    {/*Links */}
+                    {/* Links */}
                     <div className="hidden md:flex md:space-x-6">
                         <Link href="/" className="hover:text-primary font-medium">
                             Home
@@ -68,7 +72,7 @@ const NavBar = () => {
                         </Link>
                     </div>
 
-                    {/* Login/Logout button */}
+                    {/* Desktop Login/Logout */}
                     <div className="hidden md:flex md:items-center">
                         {session ? (
                             <button
@@ -87,7 +91,7 @@ const NavBar = () => {
                         )}
                     </div>
 
-                    {/*Menu Button */}
+                    {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={toggleMenu}
@@ -111,10 +115,7 @@ const NavBar = () => {
                     <Link href="/about" className="block hover:text-primary font-medium">
                         About
                     </Link>
-                    <Link
-                        href="/services"
-                        className="block hover:text-primary font-medium"
-                    >
+                    <Link href="/services" className="block hover:text-primary font-medium">
                         Services
                     </Link>
 
