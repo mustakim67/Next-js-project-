@@ -9,28 +9,31 @@ import Swal from "sweetalert2";
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [hasShownLoginAlert, setHasShownLoginAlert] = useState(false); 
     const toggleMenu = () => setIsOpen(!isOpen);
     const router = useRouter();
     const { data: session, status } = useSession();
 
     useEffect(() => {
-        if (status === "authenticated" && !hasShownLoginAlert) {
-            setHasShownLoginAlert(true); 
-            Swal.fire({
-                icon: "success",
-                title: "Login Successful",
-                text: `Welcome, ${session.user.name || "User"}!`,
-                timer: 2000,
-                showConfirmButton: false,
-            }).then(() => {
-                router.push("/products"); 
-            });
+        if (status === "authenticated") {
+            const hasShown = sessionStorage.getItem("loginAlertShown");
+            if (!hasShown) {
+                sessionStorage.setItem("loginAlertShown", "true");
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Successful",
+                    text: `Welcome, ${session.user.name || "User"}!`,
+                    timer: 2000,
+                    showConfirmButton: false,
+                }).then(() => {
+                    router.push("/products");
+                });
+            }
         }
-    }, [status, session, hasShownLoginAlert, router]);
+    }, [status, session, router]);
 
     // Logout handler
     const handleLogout = async () => {
+        sessionStorage.removeItem("loginAlertShown");
         await Swal.fire({
             icon: "success",
             title: "Logged Out",
@@ -64,15 +67,13 @@ const NavBar = () => {
                         <Link href="/products" className="hover:text-primary font-medium">
                             Products List
                         </Link>
-                        <Link href="/about" className="hover:text-primary font-medium">
-                            About
-                        </Link>
-                        <Link href="/services" className="hover:text-primary font-medium">
-                            Services
-                        </Link>
+                        {session ? (<><Link href="/dashboard/add-products" className="hover:text-primary font-medium">
+                            Add Products
+                        </Link></>) : (<></>)
+                        }
                     </div>
 
-                    {/* Desktop Login/Logout */}
+                    {/*Login/Logout */}
                     <div className="hidden md:flex md:items-center">
                         {session ? (
                             <button
@@ -93,10 +94,7 @@ const NavBar = () => {
 
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center">
-                        <button
-                            onClick={toggleMenu}
-                            className="text-2xl focus:outline-none"
-                        >
+                        <button onClick={toggleMenu} className="text-2xl focus:outline-none">
                             {isOpen ? <FiX /> : <FiMenu />}
                         </button>
                     </div>
@@ -112,12 +110,10 @@ const NavBar = () => {
                     <Link href="/products" className="hover:text-primary font-medium">
                         Products List
                     </Link>
-                    <Link href="/about" className="block hover:text-primary font-medium">
-                        About
-                    </Link>
-                    <Link href="/services" className="block hover:text-primary font-medium">
-                        Services
-                    </Link>
+                    {session ? (<><Link href="/dashboard/add-products" className="hover:text-primary font-medium">
+                        Add Products
+                    </Link></>) : (<></>)
+                    }
 
                     {session ? (
                         <button
