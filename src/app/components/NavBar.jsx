@@ -83,12 +83,9 @@ const NavBar = () => {
                                 Logout
                             </button>
                         ) : (
-                            <button
-                                onClick={() => signIn("google")}
-                                className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer"
-                            >
+                            <Link href="/login"><button className="w-full px-4 py-2 bg-black text-white rounded-lg">
                                 Login
-                            </button>
+                            </button> </Link>
                         )}
                     </div>
 
@@ -123,12 +120,9 @@ const NavBar = () => {
                             Logout
                         </button>
                     ) : (
-                        <button
-                            onClick={() => signIn("google")}
-                            className="w-full px-4 py-2 bg-black text-white rounded-lg"
-                        >
+                        <Link href="/login"><button className="w-full px-4 py-2 bg-black text-white rounded-lg">
                             Login
-                        </button>
+                        </button> </Link>
                     )}
                 </div>
             )}

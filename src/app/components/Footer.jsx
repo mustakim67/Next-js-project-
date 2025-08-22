@@ -11,7 +11,7 @@ const Footer = () => {
         {/* Logo */}
         <Link href="/">
           <img
-            src="https://i.ibb.co/PsJY60BW/brand.png"
+            src="https://i.ibb.co.com/zHXsbLSG/brand-removebg-preview.png"
             alt="TechOrbit Logo"
             className="h-12 w-auto"
           />
@@ -29,13 +29,13 @@ const Footer = () => {
 
         {/* Social Icons */}
         <div className="flex space-x-4 mt-4">
-          <a href="#" className="hover:text-white transition">
+          <a href="https://www.facebook.com" className="hover:text-white transition">
             <FaFacebookF size={20} />
           </a>
-          <a href="#" className="hover:text-white transition">
+          <a href="https://www.youtube.com" className="hover:text-white transition">
             <FaTwitter size={20} />
           </a>
-          <a href="#" className="hover:text-white transition">
+          <a href="https://www.instagram.com" className="hover:text-white transition">
             <FaInstagram size={20} />
           </a>
         </div>

@@ -1,13 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
     const [loading, setLoading] = useState(false);
+
+    // ✅ Redirect if not logged in
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            Swal.fire({
+                icon: "warning",
+                title: "Login Required",
+                text: "Please log in to access this page",
+            }).then(() => {
+                router.push("/login"); 
+            });
+        }
+    }, [status, router]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -63,6 +81,14 @@ const Page = () => {
             setLoading(false);
         }
     };
+
+    if (status === "loading") {
+        return <p className="text-center mt-10">Checking authentication...</p>;
+    }
+
+    if (!session) {
+        return null; 
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
