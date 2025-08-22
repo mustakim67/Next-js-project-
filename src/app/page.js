@@ -1,4 +1,4 @@
-import Image from "next/image";
+"use client";
 import Banner from "./components/Banner";
 import Featured from "./components/Featured";
 

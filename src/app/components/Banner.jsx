@@ -10,7 +10,7 @@ const Banner = () => {
         <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold my-6">
           THE Westmire A56 Headset
         </h1>
-        <Link href="/explore">
+        <Link href="/products">
           <button className="bg-white text-violet-700 font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-100 transition">
             Explore
           </button>
