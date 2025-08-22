@@ -71,4 +71,3 @@ This is a full-stack **Next.js** web application integrated with **MongoDB** and
 | `/dashboard/add-project` | Add a new project (requires login) |
 | `/products/[id]` | View details of a specific project |
 | `/api/auth/[...nextauth]` | **NextAuth** authentication API |
-| `/api/projects` | CRUD operations for projects |
