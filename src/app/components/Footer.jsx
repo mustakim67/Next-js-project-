@@ -25,9 +25,6 @@ const Footer = () => {
           <Link href="/products" className="hover:text-white transition">
             Products
           </Link>
-          <Link href="/about" className="hover:text-white transition">
-            About
-          </Link>
         </div>
 
         {/* Social Icons */}
